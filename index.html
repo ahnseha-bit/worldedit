@@ -3,9 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <!-- Mobile Optimization -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>Worldview Studio - Urban Fantasy</title>
-    <!-- Fixed: Clean URL for FontAwesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
         :root {
@@ -37,11 +36,12 @@
             background-color: var(--bg-dark);
             color: var(--text-main);
             height: 100vh;
+            height: 100dvh; /* Dynamic viewport height for mobile */
             display: flex;
-            overflow: hidden; /* Main container fixed */
+            overflow: hidden; 
         }
 
-        /* --- Responsive Layout System --- */
+        /* --- Layout System --- */
         
         /* Desktop Styles */
         .left-panel {
@@ -78,7 +78,7 @@
             z-index: 1000;
             justify-content: space-around;
             align-items: center;
-            padding-bottom: env(safe-area-inset-bottom); /* iPhone Home Bar safe area */
+            padding-bottom: env(safe-area-inset-bottom);
         }
 
         .nav-item {
@@ -105,8 +105,7 @@
         @media (max-width: 768px) {
             body {
                 flex-direction: column;
-                height: 100%;
-                position: fixed; 
+                position: relative; /* Changed from fixed to relative for input focus */
                 width: 100%;
             }
 
@@ -114,17 +113,22 @@
                 display: flex;
             }
 
+            /* Panels: Full screen minus nav bar */
             .left-panel, .right-panel {
                 width: 100%;
-                height: calc(100% - var(--mobile-nav-height)); 
-                border-right: none;
-                padding: 20px;
-                padding-bottom: 80px;
-                display: none; 
                 position: absolute; 
                 top: 0;
                 left: 0;
+                right: 0;
+                bottom: var(--mobile-nav-height); /* Use bottom positioning instead of calc height */
+                height: auto;
+                border-right: none;
+                padding: 20px;
+                padding-bottom: 40px;
+                display: none; 
                 z-index: 1;
+                overflow-y: auto;
+                -webkit-overflow-scrolling: touch; /* Smooth scroll on iOS */
             }
 
             .left-panel.active-tab, .right-panel.active-tab {
@@ -132,6 +136,7 @@
                 z-index: 10;
             }
 
+            /* UI Adjustments */
             .brand-title { font-size: 1rem; }
             .project-name { font-size: 1.2rem; margin-bottom: 15px; }
             .panel-title { font-size: 1.4rem; }
@@ -141,6 +146,7 @@
             .settings-btn { padding: 8px 12px; }
             
             .input-area { padding: 15px; }
+            /* Prevent iOS zoom on focus */
             textarea, input[type="text"], select {
                 font-size: 16px !important; 
             }
@@ -851,14 +857,14 @@
             .left-panel, .right-panel, .mobile-nav, 
             .modal-overlay:not(#exportModal), 
             .modal-header, .modal-footer, .close-btn,
-            .settings-btn, .action-btn {
+            .settings-btn, .action-btn, .header-actions {
                 display: none !important;
             }
             
             /* Force Export Modal to be the only visible content */
             #exportModal {
                 display: block !important;
-                position: static !important; /* Crucial: allows flow across pages */
+                position: relative !important; /* Crucial: allows flow across pages */
                 width: 100% !important;
                 height: auto !important;
                 background: white !important;
@@ -868,6 +874,8 @@
                 padding: 0 !important;
                 margin: 0 !important;
                 overflow: visible !important;
+                left: 0 !important;
+                top: 0 !important;
             }
             
             .sheet-modal {
@@ -878,6 +886,7 @@
                 border: none !important;
                 padding: 0 !important;
                 overflow: visible !important;
+                background: white !important;
             }
             
             .sheet-scroll {
@@ -910,6 +919,7 @@
             
             .sheet-section {
                 break-inside: avoid; /* Prevent awkward breaks inside sections */
+                page-break-inside: avoid;
                 margin-bottom: 20px;
             }
         }
@@ -1346,11 +1356,14 @@
                 const card = document.createElement('div');
                 card.className = 'info-card';
                 
+                // Safe Icon Handling: default to book if missing or weird
+                const iconClass = (item.icon && item.icon.startsWith('fa')) ? item.icon : 'fa-solid fa-book';
+
                 // Card Layout
                 card.innerHTML = `
                     <div class="card-header">
                         <div class="card-title">
-                            <i class="${item.icon}"></i> ${item.title}
+                            <i class="${iconClass}"></i> ${item.title}
                         </div>
                         <div class="card-actions">
                              <i class="fa-solid fa-pen action-icon edit-btn" title="수정"></i>
@@ -1514,14 +1527,9 @@
                 ${contextData}
 
                 Instructions:
-                1. **Title**: Suggest a creative title if missing.
-                2. **Genre**: Define genre/target.
-                3. **Logline**: Write a compelling 1-sentence hook.
-                4. **Keywords**: Extract 3-5 keywords.
-                5. **Intention**: Write a planning intention (Why this story?).
-                6. **Synopsis**: Combine background settings into a smooth narrative flow (Synopsis).
-                7. **Characters**: Describe characters with depth (Personality, Goal, Conflict).
-                8. **Etc**: Other rules or items.
+                1. **NO MARKDOWN**: Do NOT use markdown bold (**), italics (*), or headers (#). Use plain text only.
+                2. **Format**: Use newlines for paragraphs.
+                3. **Style**: Professional, concise, engaging.
                 
                 Output JSON format:
                 {
