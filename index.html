@@ -2,8 +2,10 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
+    <!-- Mobile Optimization: Prevent unwanted zooming while allowing accessibility -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Worldview Studio - Urban Fantasy</title>
+    <!-- Fixed: Clean URL for FontAwesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
         :root {
@@ -36,12 +38,12 @@
             color: var(--text-main);
             height: 100vh;
             display: flex;
-            overflow: hidden; /* Prevent double scrollbars */
+            overflow: hidden; /* Main container fixed */
         }
 
         /* --- Responsive Layout System --- */
         
-        /* Default (Desktop) Styles */
+        /* Desktop Styles */
         .left-panel {
             width: 360px;
             background-color: var(--bg-panel);
@@ -51,7 +53,6 @@
             padding: 24px;
             overflow-y: auto;
             flex-shrink: 0;
-            position: relative;
             height: 100%;
         }
 
@@ -74,9 +75,10 @@
             height: var(--mobile-nav-height);
             background-color: var(--bg-panel);
             border-top: 1px solid var(--border-color);
-            z-index: 100;
+            z-index: 1000;
             justify-content: space-around;
             align-items: center;
+            padding-bottom: env(safe-area-inset-bottom); /* iPhone Home Bar safe area */
         }
 
         .nav-item {
@@ -95,7 +97,7 @@
 
         .nav-item i {
             display: block;
-            font-size: 1.2rem;
+            font-size: 1.4rem;
             margin-bottom: 4px;
         }
 
@@ -103,10 +105,10 @@
         @media (max-width: 768px) {
             body {
                 flex-direction: column;
-                height: 100%; 
-                /* Use 'calc' to reserve space for bottom nav */
-                padding-bottom: var(--mobile-nav-height); 
-                overflow: hidden; 
+                /* Fix height issues on mobile browsers with URL bars */
+                height: 100%;
+                position: fixed; 
+                width: 100%;
             }
 
             /* Show Mobile Nav */
@@ -114,69 +116,61 @@
                 display: flex;
             }
 
-            /* Panels behave as "Tabs" on mobile */
+            /* Panels: Full screen minus nav bar */
             .left-panel, .right-panel {
                 width: 100%;
-                height: 100%; /* Full height of view area */
+                height: calc(100% - var(--mobile-nav-height)); 
                 border-right: none;
                 padding: 20px;
-                display: none; /* Initially hidden, toggled by JS */
+                padding-bottom: 80px; /* Extra padding for scrolling */
+                display: none; 
+                position: absolute; /* Overlap */
+                top: 0;
+                left: 0;
+                z-index: 1;
             }
 
             .left-panel.active-tab, .right-panel.active-tab {
                 display: flex;
+                z-index: 10;
             }
 
-            /* Adjust font sizes for mobile */
+            /* UI Adjustments */
             .brand-title { font-size: 1rem; }
             .project-name { font-size: 1.2rem; margin-bottom: 15px; }
             .panel-title { font-size: 1.4rem; }
             
-            /* Adjust buttons */
-            .header-actions {
-                gap: 5px;
-            }
-            .settings-btn {
-                padding: 6px 10px;
-                font-size: 0.8rem;
-            }
-            .settings-btn i {
-                font-size: 0.9rem;
-            }
-            .settings-btn span {
-                display: none; /* Hide text on small screens if needed, or keep short */
+            .header-actions { gap: 8px; }
+            .settings-btn span.desktop-only { display: none; }
+            .settings-btn { padding: 8px 12px; }
+            
+            /* Input Fixes for Mobile */
+            .input-area { padding: 15px; }
+            textarea, input[type="text"], select {
+                font-size: 16px !important; /* Prevent iOS Zoom */
             }
             
-            /* Input area adjustment */
-            .input-area {
-                padding: 15px;
-            }
-            textarea {
-                height: 100px;
-            }
-            
-            /* Modal adjustments */
+            /* Modal Fullscreen on Mobile */
             .modal {
-                width: 95%;
-                max-height: 90vh;
-                margin: auto;
+                width: 100%;
+                height: 100%;
+                max-width: none;
+                max-height: none;
+                border-radius: 0;
+                display: flex;
+                flex-direction: column;
             }
-            
-            /* Sheet modal specific */
+            .modal-body {
+                flex: 1;
+                overflow-y: auto;
+                padding-bottom: 50px;
+            }
             .sheet-modal {
                 width: 100%;
                 height: 100%;
-                max-width: 100%;
-                border-radius: 0;
-            }
-            .sheet-scroll {
-                padding: 15px;
             }
             .sheet-grid {
-                grid-template-columns: 80px 1fr; /* Reduce label width */
-            }
-            .sheet-title-main {
-                font-size: 1.5rem;
+                grid-template-columns: 80px 1fr; 
             }
         }
 
@@ -219,7 +213,7 @@
             background-color: var(--slot-inactive);
             border: 1px solid var(--border-color);
             color: var(--text-sub);
-            padding: 8px;
+            padding: 12px; /* Larger touch target */
             border-radius: 6px;
             cursor: pointer;
             font-weight: 600;
@@ -255,16 +249,16 @@
 
         .btn-group {
             display: flex;
-            gap: 8px;
+            gap: 12px;
         }
 
         .icon-btn {
             background: none;
             border: 1px solid var(--border-color);
             color: var(--text-sub);
-            width: 32px; /* Slightly larger for touch */
-            height: 32px;
-            border-radius: 4px;
+            width: 36px;
+            height: 36px;
+            border-radius: 6px;
             cursor: pointer;
             display: flex;
             align-items: center;
@@ -275,13 +269,14 @@
         .icon-btn:hover {
             color: var(--accent-color);
             border-color: var(--accent-color);
+            background-color: rgba(255,255,255,0.05);
         }
 
         .cards-container {
             display: flex;
             flex-direction: column;
             gap: 12px;
-            padding-bottom: 20px; /* Ensure scroll space */
+            padding-bottom: 20px;
         }
 
         .info-card {
@@ -294,10 +289,8 @@
             position: relative;
         }
 
-        .info-card:hover {
-            border-color: var(--accent-color);
-            transform: translateY(-2px);
-            background-color: #2a2a2a;
+        .info-card:active {
+            background-color: #333; /* Touch feedback */
         }
 
         .card-header {
@@ -318,16 +311,14 @@
 
         .card-actions {
             display: flex;
-            gap: 8px;
-            /* Always show on mobile? or keep hover logic? Let's keep it simple. */
-            opacity: 0.8; /* Visible by default for touch */
-            transition: opacity 0.2s;
+            gap: 12px;
+            opacity: 0.9;
         }
 
         .action-icon {
             color: var(--text-sub);
-            font-size: 0.9rem;
-            padding: 8px; /* Larger touch target */
+            font-size: 1rem;
+            padding: 8px; 
             border-radius: 4px;
             transition: background-color 0.2s;
         }
@@ -418,6 +409,7 @@
             border-color: var(--accent-color);
         }
         
+        /* Fixed: Correct SVG URL format without markdown artifacts */
         select {
             cursor: pointer;
             appearance: none;
@@ -444,20 +436,15 @@
             cursor: pointer;
             display: flex;
             align-items: center;
-            justify-content: center; /* Centered for mobile */
+            justify-content: center;
             gap: 8px;
             margin-top: 16px;
             margin-left: auto;
-            width: 100%; /* Full width on mobile if needed, usually auto is fine but block feels safer */
             transition: transform 0.2s, box-shadow 0.2s;
         }
-        @media (min-width: 769px) {
-            .action-btn { width: auto; }
-        }
-
-        .action-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(124, 77, 255, 0.4);
+        
+        .action-btn:active {
+            transform: translateY(0);
         }
 
         .result-actions {
@@ -484,8 +471,6 @@
             background-color: rgba(255,255,255,0.05);
             color: white;
             border-color: var(--text-main);
-            transform: translateY(-2px);
-            box-shadow: none;
         }
         
         .action-btn.reflect {
@@ -502,10 +487,6 @@
             background: linear-gradient(135deg, #00c6ff, #0072ff);
             border: none;
             color: white;
-        }
-        .action-btn.polish:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0, 114, 255, 0.4);
         }
 
         /* Output Area */
@@ -527,7 +508,7 @@
             transform: translate(-50%, -50%);
             color: #555;
             text-align: center;
-            width: 100%; /* Ensure center */
+            width: 100%;
         }
 
         .output-placeholder i {
@@ -657,7 +638,7 @@
             background: none;
             border: none;
             color: var(--text-sub);
-            font-size: 1.2rem;
+            font-size: 1.5rem;
             cursor: pointer;
             padding: 8px;
         }
@@ -1400,6 +1381,7 @@
                     titleEl.innerText = '설정 상세 / 수정';
                     idEl.value = data.id;
                     
+                    // Check if icon exists in select, if not add temp option
                     let iconExists = false;
                     for(let i=0; i < iconEl.options.length; i++){
                         if(iconEl.options[i].value === data.icon){
@@ -1543,18 +1525,43 @@
                 if(data.error) throw new Error(data.error.message);
 
                 const text = data.candidates[0].content.parts[0].text;
-                const result = JSON.parse(text);
+                
+                // Safe Cleaning
+                const cleanText = text.replace(/```json/g, '').replace(/```/g, '').trim();
+                const result = JSON.parse(cleanText);
 
-                // Fill Fields
-                document.getElementById('sheetTitle').value = result.title || "";
-                document.getElementById('sheetGenre').value = result.genre || "";
-                document.getElementById('sheetLogline').value = result.logline || "";
-                document.getElementById('sheetKeywords').value = result.keywords || "";
-                document.getElementById('sheetIntention').value = result.intention || "";
-                document.getElementById('sheetElements').value = result.elements || ""; // growth/conflict elements
-                document.getElementById('sheetSynopsis').value = result.synopsis || "";
-                document.getElementById('sheetCharacters').value = result.characters || "";
-                document.getElementById('sheetItems').value = result.items || "";
+                // Safe Formatting Helper
+                function formatValue(value) {
+                    if (!value) return "";
+                    if (typeof value === 'string') return value;
+                    if (Array.isArray(value)) {
+                        // Check if array of objects
+                        if (value.length > 0 && typeof value[0] === 'object') {
+                            return value.map(v => {
+                                const parts = [];
+                                if(v.name || v.title) parts.push(`[${v.name || v.title}]`);
+                                if(v.desc || v.description) parts.push(v.desc || v.description);
+                                return parts.join(' ');
+                            }).join('\n\n');
+                        }
+                        return value.join(', ');
+                    }
+                    if (typeof value === 'object') {
+                        return Object.entries(value).map(([k, v]) => `${k}: ${v}`).join('\n');
+                    }
+                    return String(value);
+                }
+
+                // Fill Fields with Formatting
+                document.getElementById('sheetTitle').value = formatValue(result.title);
+                document.getElementById('sheetGenre').value = formatValue(result.genre);
+                document.getElementById('sheetLogline').value = formatValue(result.logline);
+                document.getElementById('sheetKeywords').value = formatValue(result.keywords);
+                document.getElementById('sheetIntention').value = formatValue(result.intention);
+                document.getElementById('sheetElements').value = formatValue(result.elements); 
+                document.getElementById('sheetSynopsis').value = formatValue(result.synopsis);
+                document.getElementById('sheetCharacters').value = formatValue(result.characters);
+                document.getElementById('sheetItems').value = formatValue(result.items);
 
                 showAlert("AI가 기획서를 다듬었습니다!");
 
