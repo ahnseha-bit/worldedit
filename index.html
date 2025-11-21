@@ -18,6 +18,8 @@
             --card-bg: #252525;
             --modal-bg: #1e1e1e;
             --danger-color: #ff5252;
+            --slot-active: #7c4dff;
+            --slot-inactive: #333333;
         }
 
         * {
@@ -60,8 +62,48 @@
         .project-name {
             font-size: 1.5rem;
             font-weight: 800;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
             color: white;
+        }
+
+        /* Slot Selector Styles */
+        .slot-container {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 24px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .slot-label {
+            font-size: 0.8rem;
+            color: var(--text-sub);
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .slot-btn {
+            flex: 1;
+            background-color: var(--slot-inactive);
+            border: 1px solid var(--border-color);
+            color: var(--text-sub);
+            padding: 8px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+
+        .slot-btn:hover {
+            background-color: #444;
+            color: white;
+        }
+
+        .slot-btn.active {
+            background-color: var(--slot-active);
+            color: white;
+            border-color: var(--slot-active);
+            box-shadow: 0 2px 8px rgba(124, 77, 255, 0.4);
         }
 
         .section-header {
@@ -141,16 +183,26 @@
             gap: 8px;
         }
 
-        .edit-icon {
+        .card-actions {
+            display: flex;
+            gap: 4px;
             opacity: 0;
-            color: var(--text-sub);
-            font-size: 0.8rem;
             transition: opacity 0.2s;
         }
 
-        .info-card:hover .edit-icon {
+        .info-card:hover .card-actions {
             opacity: 1;
         }
+
+        .action-icon {
+            color: var(--text-sub);
+            font-size: 0.8rem;
+            padding: 6px; /* Click area increased */
+            border-radius: 4px;
+            transition: background-color 0.2s;
+        }
+        .action-icon:hover { color: white; background-color: rgba(255,255,255,0.1); }
+        .action-icon.delete:hover { color: var(--danger-color); background-color: rgba(255,82,82,0.1); }
 
         .card-desc {
             font-size: 0.9rem;
@@ -223,7 +275,7 @@
             font-weight: 500;
         }
 
-        textarea, input[type="text"], input[type="password"] {
+        textarea, input[type="text"], input[type="password"], select {
             background-color: var(--bg-input);
             border: 1px solid transparent;
             border-radius: 8px;
@@ -240,9 +292,24 @@
             line-height: 1.6;
         }
 
-        textarea:focus, input[type="text"]:focus, input[type="password"]:focus {
+        textarea:focus, input[type="text"]:focus, input[type="password"]:focus, select:focus {
             outline: none;
             border-color: var(--accent-color);
+        }
+        
+        select {
+            cursor: pointer;
+            appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 1rem center;
+            background-size: 1em;
+        }
+        
+        select option {
+            background-color: var(--bg-panel);
+            color: white;
+            padding: 10px;
         }
 
         .action-btn {
@@ -267,7 +334,6 @@
             box-shadow: 0 4px 12px rgba(124, 77, 255, 0.4);
         }
 
-        /* New Styles for Result Actions */
         .result-actions {
             display: flex;
             gap: 12px;
@@ -275,6 +341,7 @@
             padding-top: 20px;
             border-top: 1px solid var(--border-color);
             justify-content: flex-end;
+            flex-wrap: wrap;
         }
 
         .action-btn.secondary {
@@ -293,6 +360,16 @@
             border-color: var(--text-main);
             transform: translateY(-2px);
             box-shadow: none;
+        }
+        
+        .action-btn.reflect {
+            background: rgba(124, 77, 255, 0.1);
+            border: 1px solid var(--accent-color);
+            color: var(--accent-color);
+        }
+        .action-btn.reflect:hover {
+            background: var(--accent-color);
+            color: white;
         }
 
         /* Output Area */
@@ -558,13 +635,20 @@
         <div class="brand-title"><i class="fa-solid fa-book-open"></i> Story Archiver</div>
         <h1 class="project-name">Project:<br>Urban Fantasy</h1>
 
+        <!-- Slot Selector -->
+        <div class="slot-label">SAVE SLOTS</div>
+        <div class="slot-container">
+            <button class="slot-btn active" id="slot1" onclick="switchSlot(1)">1</button>
+            <button class="slot-btn" id="slot2" onclick="switchSlot(2)">2</button>
+            <button class="slot-btn" id="slot3" onclick="switchSlot(3)">3</button>
+        </div>
+
         <div class="section-header">
             <div class="section-title">World Settings</div>
             <div class="btn-group">
                 <button class="icon-btn" onclick="document.getElementById('fileUpload').click()" title="파일 업로드">
                     <i class="fa-solid fa-file-import"></i>
                 </button>
-                <!-- Paste Button -->
                 <button class="icon-btn" onclick="openModal('paste')" title="텍스트 직접 붙여넣기">
                     <i class="fa-solid fa-clipboard"></i>
                 </button>
@@ -581,7 +665,7 @@
         <!-- Left Panel Loading Overlay -->
         <div id="leftLoading" class="loading-overlay" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; border-radius: 0;">
              <div class="spinner"></div>
-             <p>데이터 분석 중...</p>
+             <p id="leftLoadingText">데이터 분석 중...</p>
         </div>
     </aside>
 
@@ -632,8 +716,24 @@
             <div class="modal-body">
                 <input type="hidden" id="settingId">
                 <div class="form-group">
-                    <label class="form-label">아이콘 (FontAwesome Class)</label>
-                    <input type="text" id="settingIcon" placeholder="예) fa-solid fa-city">
+                    <label class="form-label">아이콘 선택</label>
+                    <select id="settingIcon">
+                        <option value="fa-solid fa-book">📖 기본/설정 (Book)</option>
+                        <option value="fa-solid fa-user">👤 인물 (Person)</option>
+                        <option value="fa-solid fa-user-secret">🕵️ 악역/스파이 (Villain)</option>
+                        <option value="fa-solid fa-users">👥 단체/조직 (Group)</option>
+                        <option value="fa-solid fa-city">🏙️ 배경/도시 (City)</option>
+                        <option value="fa-solid fa-location-dot">📍 장소/위치 (Location)</option>
+                        <option value="fa-solid fa-bolt">⚡ 마법/능력 (Magic)</option>
+                        <option value="fa-solid fa-wand-magic-sparkles">✨ 신비/유물 (Artifact)</option>
+                        <option value="fa-solid fa-gem">💎 아이템/보석 (Item)</option>
+                        <option value="fa-solid fa-shield-halved">🛡️ 방어/규칙 (Rule)</option>
+                        <option value="fa-solid fa-scroll">📜 역사/기록 (History)</option>
+                        <option value="fa-solid fa-skull">💀 위험/몬스터 (Danger)</option>
+                        <option value="fa-solid fa-heart">❤️ 관계/사랑 (Love)</option>
+                        <option value="fa-solid fa-clock">⏰ 시간/타임라인 (Time)</option>
+                        <option value="fa-solid fa-comment-dots">💬 대사/명언 (Quote)</option>
+                    </select>
                 </div>
                 <div class="form-group">
                     <label class="form-label">제목</label>
@@ -736,8 +836,9 @@
     </div>
 
     <script>
-        // Initial Data (State)
-        let worldData = [
+        // Initial Data State
+        let currentSlot = 1;
+        const DEFAULT_DATA = [
             {
                 id: 1,
                 icon: "fa-solid fa-city",
@@ -753,9 +854,49 @@
                 tag: "특성: 마력 감지"
             }
         ];
-
+        
+        let worldData = []; // Will be loaded from local storage
         let GEMINI_API_KEY = localStorage.getItem('gemini_api_key') || '';
         let episodeHistory = JSON.parse(localStorage.getItem('episode_history')) || [];
+
+        // --- Local Storage & Slots ---
+
+        function loadWorldData(slot) {
+            const key = `world_data_slot_${slot}`;
+            const saved = localStorage.getItem(key);
+            if (saved) {
+                worldData = JSON.parse(saved);
+            } else {
+                worldData = JSON.parse(JSON.stringify(DEFAULT_DATA)); // Deep copy default
+            }
+            currentSlot = slot;
+            updateSlotUI();
+            renderCards();
+        }
+
+        function saveToLocal() {
+            const key = `world_data_slot_${currentSlot}`;
+            localStorage.setItem(key, JSON.stringify(worldData));
+        }
+
+        function switchSlot(slot) {
+            loadWorldData(slot);
+        }
+
+        function updateSlotUI() {
+            for(let i=1; i<=3; i++) {
+                const btn = document.getElementById(`slot${i}`);
+                if(i === currentSlot) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            }
+        }
+
+        // --- Init ---
+        loadWorldData(1); // Load slot 1 by default
+
 
         // Custom Alert Function
         function showAlert(msg) {
@@ -771,26 +912,55 @@
             const container = document.getElementById('cardsContainer');
             container.innerHTML = '';
 
-            worldData.forEach(item => {
+            worldData.forEach((item, index) => {
                 const card = document.createElement('div');
                 card.className = 'info-card';
-                card.onclick = () => openModal('edit', item.id); 
                 
-                const tagHtml = item.tag ? `<span class="tag">${item.tag}</span>` : '';
-                const descDisplay = item.desc ? item.desc.replace(/\n/g, '<br>') : '';
-
+                // Card Layout
                 card.innerHTML = `
                     <div class="card-header">
                         <div class="card-title">
                             <i class="${item.icon}"></i> ${item.title}
                         </div>
-                        <i class="fa-solid fa-pen edit-icon"></i>
+                        <div class="card-actions">
+                             <i class="fa-solid fa-pen action-icon edit-btn" title="수정"></i>
+                             <i class="fa-solid fa-trash action-icon delete delete-btn" title="삭제"></i>
+                        </div>
                     </div>
-                    <div class="card-desc">${descDisplay}</div>
-                    ${tagHtml}
+                    <div class="card-desc">${item.desc ? item.desc.replace(/\n/g, '<br>') : ''}</div>
+                    ${item.tag ? `<span class="tag">${item.tag}</span>` : ''}
                 `;
+                
+                // Main Card Click (Open Edit)
+                card.addEventListener('click', (e) => {
+                    openModal('edit', item.id);
+                });
+
+                // Edit Button specific (Same as card but just in case)
+                const editBtn = card.querySelector('.edit-btn');
+                editBtn.addEventListener('click', (e) => {
+                    e.stopPropagation(); // Stop bubbling to card click
+                    openModal('edit', item.id);
+                });
+
+                // Delete Button specific (Safe Event Listener)
+                const deleteBtn = card.querySelector('.delete-btn');
+                deleteBtn.addEventListener('click', (e) => {
+                    e.stopPropagation(); // CRITICAL: Stop bubbling so card click doesn't fire
+                    deleteCard(item.id);
+                });
+
                 container.appendChild(card);
             });
+        }
+
+        function deleteCard(id) {
+            // Ask confirmation
+            if(confirm("정말 이 설정을 삭제하시겠습니까?")) {
+                worldData = worldData.filter(item => item.id !== id);
+                saveToLocal();
+                renderCards();
+            }
         }
 
         // Modal Functions
@@ -809,7 +979,23 @@
                     if (!data) return;
                     titleEl.innerText = '설정 상세 / 수정';
                     idEl.value = data.id;
+                    
+                    // Icon selection logic
+                    let iconExists = false;
+                    for(let i=0; i < iconEl.options.length; i++){
+                        if(iconEl.options[i].value === data.icon){
+                            iconExists = true;
+                            break;
+                        }
+                    }
+                    if(!iconExists) {
+                        let opt = document.createElement('option');
+                        opt.value = data.icon;
+                        opt.innerHTML = "✨ 기존 아이콘 (" + data.icon + ")";
+                        iconEl.appendChild(opt);
+                    }
                     iconEl.value = data.icon;
+
                     titleInputEl.value = data.title;
                     descEl.value = data.desc;
                     tagEl.value = data.tag;
@@ -860,6 +1046,7 @@
                 const newId = worldData.length > 0 ? Math.max(...worldData.map(d => d.id)) + 1 : 1;
                 worldData.push({ id: newId, icon, title, desc, tag });
             }
+            saveToLocal(); // Save persistent
             renderCards();
             closeModal('edit');
         }
@@ -913,33 +1100,59 @@
             analyzeAndImportSettings(text);
         }
 
-        async function analyzeAndImportSettings(fileContent) {
+        // NEW: Reflect Episode to World Settings
+        async function reflectToSettings() {
+            const rawText = document.getElementById('rawEpisodeText').value;
+            if(!rawText) {
+                showAlert("반영할 에피소드 내용이 없습니다.");
+                return;
+            }
+            if (!GEMINI_API_KEY) {
+                showAlert("AI 연결이 필요합니다.");
+                return;
+            }
+
             const loading = document.getElementById('leftLoading');
+            document.getElementById('leftLoadingText').innerText = "에피소드 분석 및 반영 중...";
             loading.style.display = 'flex';
 
+            // Provide existing titles to help AI decide update vs new
+            const existingTitles = worldData.map(d => d.title).join(", ");
+
             const prompt = `
-                Analyze the following story setting document and extract key elements into a JSON list.
+                Analyze the provided STORY EPISODE and extract NEW or UPDATED world setting elements (Characters, Places, Rules).
                 
-                Document Content:
-                """
-                ${fileContent}
-                """
-
-                Task:
-                1. Identify distinct world elements (Characters, Places, Rules, History, etc.).
-                2. For each element, provide:
-                   - "title": Name of the element.
-                   - "desc": A concise summary (2-3 sentences).
-                   - "tag": Category (e.g., "Character", "Location", "Rule").
-                   - "icon": A suitable FontAwesome 6 class string (e.g., "fa-solid fa-user", "fa-solid fa-landmark").
-                3. Return ONLY the JSON array.
-
-                Example Output format:
-                [
-                    {"title": "Hero Name", "desc": "Description...", "tag": "Character", "icon": "fa-solid fa-user"},
-                    {"title": "City Name", "desc": "Description...", "tag": "Location", "icon": "fa-solid fa-city"}
-                ]
+                Instructions:
+                1. If an element exists in the Current Settings list: "${existingTitles}", create an entry with the SAME TITLE and provide ONLY the NEW facts/events from this episode to append to its history.
+                2. If it's a completely new element, create a full entry.
+                3. Language: Korean.
+                
+                Input Story:
+                """${rawText}"""
             `;
+
+            // Reuse strict schema from analysis
+            const generationConfig = {
+                response_mime_type: "application/json",
+                response_schema: {
+                    type: "OBJECT",
+                    properties: {
+                        settings: {
+                            type: "ARRAY",
+                            items: {
+                                type: "OBJECT",
+                                properties: {
+                                    title: { type: "STRING" },
+                                    desc: { type: "STRING" },
+                                    tag: { type: "STRING" },
+                                    icon: { type: "STRING" }
+                                },
+                                required: ["title", "desc", "tag", "icon"]
+                            }
+                        }
+                    }
+                }
+            };
 
             try {
                 const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${GEMINI_API_KEY}`, {
@@ -947,45 +1160,119 @@
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
                         contents: [{ parts: [{ text: prompt }] }],
-                        generationConfig: { response_mime_type: "application/json" }
+                        generationConfig: generationConfig
+                    })
+                });
+
+                const data = await response.json();
+                if(data.error) throw new Error(data.error.message);
+
+                const text = data.candidates[0].content.parts[0].text;
+                const result = JSON.parse(text);
+                const items = result.settings || result;
+
+                let updatedCount = 0;
+                let newCount = 0;
+
+                items.forEach(newItem => {
+                    // Check if exists
+                    const index = worldData.findIndex(d => d.title === newItem.title);
+                    if(index !== -1) {
+                        // Update existing
+                        const existing = worldData[index];
+                        // Append new info if not too redundant
+                        if(!existing.desc.includes(newItem.desc)) {
+                            existing.desc += `\n\n[추가됨]: ${newItem.desc}`;
+                            updatedCount++;
+                        }
+                    } else {
+                        // Create new
+                        let newId = worldData.length > 0 ? Math.max(...worldData.map(d => d.id)) + 1 : 1;
+                        // Ensure ID uniqueness in loop
+                        while(worldData.find(d => d.id === newId)) newId++;
+                        
+                        newItem.id = newId;
+                        worldData.push(newItem);
+                        newCount++;
+                    }
+                });
+
+                saveToLocal();
+                renderCards();
+                showAlert(`반영 완료!\n- 새로운 설정: ${newCount}개\n- 업데이트된 설정: ${updatedCount}개`);
+
+            } catch (e) {
+                showAlert(`반영 중 오류 발생: ${e.message}`);
+                console.error(e);
+            } finally {
+                loading.style.display = 'none';
+                document.getElementById('leftLoadingText').innerText = "데이터 분석 중...";
+            }
+        }
+
+        async function analyzeAndImportSettings(fileContent) {
+            const loading = document.getElementById('leftLoading');
+            loading.style.display = 'flex';
+
+            const prompt = `
+                Analyze the provided text and extract story settings.
+                Language: Korean.
+                
+                Text: """${fileContent}"""
+            `;
+
+            const generationConfig = {
+                response_mime_type: "application/json",
+                response_schema: {
+                    type: "OBJECT",
+                    properties: {
+                        settings: {
+                            type: "ARRAY",
+                            items: {
+                                type: "OBJECT",
+                                properties: {
+                                    title: { type: "STRING" },
+                                    desc: { type: "STRING" },
+                                    tag: { type: "STRING" },
+                                    icon: { type: "STRING" }
+                                },
+                                required: ["title", "desc", "tag", "icon"]
+                            }
+                        }
+                    }
+                }
+            };
+
+            try {
+                const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${GEMINI_API_KEY}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        contents: [{ parts: [{ text: prompt }] }],
+                        generationConfig: generationConfig
                     })
                 });
 
                 const data = await response.json();
                 
-                // API Key Error Handling
                 if (data.error) {
-                    if (data.error.message.includes('API key') || data.error.code === 400) {
-                        localStorage.removeItem('gemini_api_key');
-                        GEMINI_API_KEY = '';
-                        showAlert("API Key가 올바르지 않습니다.\n설정창을 열어 다시 입력해주세요.");
-                        loading.style.display = 'none';
-                        openModal('api');
-                        return;
-                    }
                     throw new Error(data.error.message);
                 }
 
-                let text = data.candidates[0].content.parts[0].text;
-                
-                try {
-                    text = text.replace(/```json/g, '').replace(/```/g, '').trim();
-                    const newSettings = JSON.parse(text);
+                const text = data.candidates[0].content.parts[0].text;
+                const result = JSON.parse(text);
+                const newSettings = result.settings || result;
 
-                    let currentId = worldData.length > 0 ? Math.max(...worldData.map(d => d.id)) : 0;
-                    newSettings.forEach(item => {
-                        currentId++;
-                        item.id = currentId;
-                        worldData.push(item);
-                    });
+                let currentId = worldData.length > 0 ? Math.max(...worldData.map(d => d.id)) : 0;
+                newSettings.forEach(item => {
+                    currentId++;
+                    item.id = currentId;
+                    worldData.push(item);
+                });
 
-                    renderCards();
-                    showAlert(`${newSettings.length}개의 설정이 추가되었습니다!`);
-
-                } catch (parseError) {
-                    console.error("JSON Parse Error:", parseError);
-                    throw new Error("데이터 분석 실패. 텍스트 내용이 너무 짧거나 불명확할 수 있습니다.");
-                }
+                saveToLocal();
+                renderCards();
+                showAlert(`${newSettings.length}개의 설정이 추가되었습니다!`);
 
             } catch (error) {
                 showAlert(`오류가 발생했습니다:\n${error.message}`);
@@ -1048,22 +1335,12 @@
 
                 const data = await response.json();
                 
-                // API Key Error Handling
                 if (data.error) {
-                    if (data.error.message.includes('API key') || data.error.code === 400) {
-                        localStorage.removeItem('gemini_api_key');
-                        GEMINI_API_KEY = '';
-                        loading.style.display = 'none';
-                        showAlert("API Key가 올바르지 않습니다.\n설정창을 열어 다시 입력해주세요.");
-                        openModal('api');
-                        return;
-                    }
                     throw new Error(data.error.message);
                 }
 
                 const generatedText = data.candidates[0].content.parts[0].text;
 
-                // Save to History
                 saveToHistory(inputVal, generatedText);
 
                 loading.style.display = 'none';
@@ -1091,6 +1368,9 @@
                 </div>
                 
                 <div class="result-actions">
+                    <button class="action-btn secondary reflect" onclick="reflectToSettings()">
+                        <i class="fa-solid fa-retweet"></i> 월드세팅에 반영 (분석 & 추가)
+                    </button>
                     <button class="action-btn secondary" onclick="copyToClipboard()">
                         <i class="fa-regular fa-copy"></i> 클립보드 복사
                     </button>
@@ -1141,7 +1421,7 @@
                 event: event,
                 content: content
             };
-            episodeHistory.unshift(newEntry); // Add to beginning
+            episodeHistory.unshift(newEntry);
             localStorage.setItem('episode_history', JSON.stringify(episodeHistory));
         }
 
@@ -1155,7 +1435,6 @@
             }
 
             episodeHistory.forEach(item => {
-                // Create preview text (first 100 chars)
                 const preview = item.content.substring(0, 100) + '...';
                 
                 const itemDiv = document.createElement('div');
@@ -1182,14 +1461,11 @@
         function loadHistory(id) {
             const item = episodeHistory.find(entry => entry.id === id);
             if (item) {
-                // Restore to main view
                 document.getElementById('eventInput').value = item.event;
                 const result = document.getElementById('resultContent');
-                
                 document.getElementById('placeholder').style.display = 'none';
                 result.innerHTML = formatOutput(item.content, item.event);
                 result.style.display = 'block';
-                
                 closeModal('history');
             }
         }
@@ -1198,7 +1474,7 @@
             if(confirm("정말 이 기록을 삭제하시겠습니까?")) {
                 episodeHistory = episodeHistory.filter(entry => entry.id !== id);
                 localStorage.setItem('episode_history', JSON.stringify(episodeHistory));
-                renderHistory(); // Re-render list
+                renderHistory();
             }
         }
 
