@@ -2,7 +2,7 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <!-- Mobile Optimization: Prevent unwanted zooming while allowing accessibility -->
+    <!-- Mobile Optimization -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Worldview Studio - Urban Fantasy</title>
     <!-- Fixed: Clean URL for FontAwesome -->
@@ -105,26 +105,23 @@
         @media (max-width: 768px) {
             body {
                 flex-direction: column;
-                /* Fix height issues on mobile browsers with URL bars */
                 height: 100%;
                 position: fixed; 
                 width: 100%;
             }
 
-            /* Show Mobile Nav */
             .mobile-nav {
                 display: flex;
             }
 
-            /* Panels: Full screen minus nav bar */
             .left-panel, .right-panel {
                 width: 100%;
                 height: calc(100% - var(--mobile-nav-height)); 
                 border-right: none;
                 padding: 20px;
-                padding-bottom: 80px; /* Extra padding for scrolling */
+                padding-bottom: 80px;
                 display: none; 
-                position: absolute; /* Overlap */
+                position: absolute; 
                 top: 0;
                 left: 0;
                 z-index: 1;
@@ -135,7 +132,6 @@
                 z-index: 10;
             }
 
-            /* UI Adjustments */
             .brand-title { font-size: 1rem; }
             .project-name { font-size: 1.2rem; margin-bottom: 15px; }
             .panel-title { font-size: 1.4rem; }
@@ -144,13 +140,11 @@
             .settings-btn span.desktop-only { display: none; }
             .settings-btn { padding: 8px 12px; }
             
-            /* Input Fixes for Mobile */
             .input-area { padding: 15px; }
             textarea, input[type="text"], select {
-                font-size: 16px !important; /* Prevent iOS Zoom */
+                font-size: 16px !important; 
             }
             
-            /* Modal Fullscreen on Mobile */
             .modal {
                 width: 100%;
                 height: 100%;
@@ -192,7 +186,7 @@
             color: white;
         }
 
-        /* Slot Selector Styles */
+        /* Slot Selector */
         .slot-container {
             display: flex;
             gap: 8px;
@@ -213,7 +207,7 @@
             background-color: var(--slot-inactive);
             border: 1px solid var(--border-color);
             color: var(--text-sub);
-            padding: 12px; /* Larger touch target */
+            padding: 12px;
             border-radius: 6px;
             cursor: pointer;
             font-weight: 600;
@@ -290,7 +284,7 @@
         }
 
         .info-card:active {
-            background-color: #333; /* Touch feedback */
+            background-color: #333; 
         }
 
         .card-header {
@@ -409,7 +403,6 @@
             border-color: var(--accent-color);
         }
         
-        /* Fixed: Correct SVG URL format without markdown artifacts */
         select {
             cursor: pointer;
             appearance: none;
@@ -837,52 +830,87 @@
             height: 150px;
         }
 
-        /* Print Specifics */
+        /* --- PRINT STYLES: FIX FOR CUTOFF --- */
         @media print {
-            body * {
-                visibility: hidden;
+            @page { 
+                size: A4;
+                margin: 15mm;
             }
-            #exportModal, #exportModal * {
-                visibility: visible;
-            }
-            #exportModal {
-                position: absolute;
-                left: 0;
-                top: 0;
-                width: 100%;
-                height: 100%;
+            
+            /* Reset main layout to avoid cutoff */
+            body, html {
                 background: white;
-                z-index: 9999;
-                box-shadow: none;
-                border: none;
-                padding: 0;
-            }
-            .sheet-modal {
                 width: 100%;
-                height: auto;
-                max-width: none;
-                box-shadow: none;
-                border: none;
-                padding: 20mm; /* Print margins */
+                height: auto !important;
+                overflow: visible !important;
+                position: static !important;
+                display: block !important;
             }
-            .sheet-scroll {
-                padding: 0;
-                overflow: visible;
-                height: auto;
-            }
-            .modal-header, .modal-footer, .close-btn {
+
+            /* Hide non-print elements */
+            .left-panel, .right-panel, .mobile-nav, 
+            .modal-overlay:not(#exportModal), 
+            .modal-header, .modal-footer, .close-btn,
+            .settings-btn, .action-btn {
                 display: none !important;
             }
-            .sheet-field-input {
-                border: none;
-                background: transparent;
-                padding: 0;
-                resize: none;
-                overflow: hidden;
+            
+            /* Force Export Modal to be the only visible content */
+            #exportModal {
+                display: block !important;
+                position: static !important; /* Crucial: allows flow across pages */
+                width: 100% !important;
+                height: auto !important;
+                background: white !important;
+                z-index: 9999;
+                box-shadow: none !important;
+                border: none !important;
+                padding: 0 !important;
+                margin: 0 !important;
+                overflow: visible !important;
             }
-            /* Hide Scrollbars */
-            ::-webkit-scrollbar {
-                display: none;
+            
+            .sheet-modal {
+                width: 100% !important;
+                height: auto !important;
+                max-width: none !important;
+                box-shadow: none !important;
+                border: none !important;
+                padding: 0 !important;
+                overflow: visible !important;
+            }
+            
+            .sheet-scroll {
+                height: auto !important;
+                overflow: visible !important;
+                padding: 0 !important;
+            }
+            
+            .sheet-container {
+                width: 100% !important;
+                margin: 0 !important;
+            }
+            
+            /* Styling inputs for print */
+            .sheet-field-input {
+                border: none !important;
+                background: transparent !important;
+                resize: none !important;
+                padding: 0 !important;
+                margin: 0 !important;
+                font-size: 11pt !important;
+                line-height: 1.5 !important;
+                /* Ensure full text visibility */
+                height: auto !important; 
+                overflow: visible !important;
+                white-space: pre-wrap !important; 
+                color: black !important;
+                display: block !important;
+            }
+            
+            .sheet-section {
+                break-inside: avoid; /* Prevent awkward breaks inside sections */
+                margin-bottom: 20px;
             }
         }
         
@@ -1196,7 +1224,7 @@
                     <i class="fa-solid fa-wand-magic-sparkles"></i> AI로 문장 다듬기
                 </button>
 
-                <button class="btn-primary" onclick="window.print()">
+                <button class="btn-primary" onclick="printSheet()">
                     <i class="fa-solid fa-print"></i> PDF로 저장 / 인쇄
                 </button>
             </div>
@@ -1381,7 +1409,6 @@
                     titleEl.innerText = '설정 상세 / 수정';
                     idEl.value = data.id;
                     
-                    // Check if icon exists in select, if not add temp option
                     let iconExists = false;
                     for(let i=0; i < iconEl.options.length; i++){
                         if(iconEl.options[i].value === data.icon){
@@ -1571,6 +1598,18 @@
             } finally {
                 loading.style.display = 'none';
             }
+        }
+
+        function printSheet() {
+            // 1. Auto-resize textareas for printing
+            const textareas = document.querySelectorAll('.sheet-textarea, .sheet-field-input');
+            textareas.forEach(ta => {
+                ta.style.height = 'auto'; // Reset
+                ta.style.height = (ta.scrollHeight + 5) + 'px'; // Expand to fit content
+            });
+            
+            // 2. Trigger Print
+            window.print();
         }
 
         function saveSetting() {
