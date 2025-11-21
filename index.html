@@ -1410,7 +1410,6 @@
                     titleEl.innerText = '설정 상세 / 수정';
                     idEl.value = data.id;
                     
-                    // Check if icon exists in select, if not add temp option
                     let iconExists = false;
                     for(let i=0; i < iconEl.options.length; i++){
                         if(iconEl.options[i].value === data.icon){
@@ -1525,6 +1524,8 @@
                 7. **Characters**: Describe characters with depth (Personality, Goal, Conflict).
                 8. **Etc**: Other rules or items.
                 
+                **CRITICAL INSTRUCTION:** Do NOT use markdown syntax (like **, ##, -). Output ONLY Plain Text.
+                
                 Output JSON format:
                 {
                     "title": "...",
@@ -1562,14 +1563,16 @@
                 // Safe Formatting Helper
                 function formatValue(value) {
                     if (!value) return "";
-                    if (typeof value === 'string') return value;
+                    if (typeof value === 'string') return value.replace(/\*\*|__|`/g, ''); // Remove MD
                     if (Array.isArray(value)) {
                         // Check if array of objects
                         if (value.length > 0 && typeof value[0] === 'object') {
                             return value.map(v => {
                                 const parts = [];
-                                if(v.name || v.title) parts.push(`[${v.name || v.title}]`);
-                                if(v.desc || v.description) parts.push(v.desc || v.description);
+                                const title = v.name || v.title || '';
+                                const desc = v.desc || v.description || v.role || '';
+                                if(title) parts.push(`[${title}]`);
+                                if(desc) parts.push(desc);
                                 return parts.join(' ');
                             }).join('\n\n');
                         }
@@ -1578,7 +1581,7 @@
                     if (typeof value === 'object') {
                         return Object.entries(value).map(([k, v]) => `${k}: ${v}`).join('\n');
                     }
-                    return String(value);
+                    return String(value).replace(/\*\*|__|`/g, '');
                 }
 
                 // Fill Fields with Formatting
