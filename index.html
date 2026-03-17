@@ -2,10 +2,8 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <!-- Mobile Optimization -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Worldview Studio - Urban Fantasy</title>
-    <!-- Fixed: Clean URL for FontAwesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
         :root {
@@ -919,12 +917,10 @@
 </head>
 <body>
 
-    <!-- Left Panel: Worldview Info -->
     <aside class="left-panel active-tab" id="panelSettings">
         <div class="brand-title"><i class="fa-solid fa-book-open"></i> Story Archiver</div>
         <h1 class="project-name">Project:<br>Urban Fantasy</h1>
 
-        <!-- Slot Selector -->
         <div class="slot-label">SAVE SLOTS</div>
         <div class="slot-container">
             <button class="slot-btn active" id="slot1" onclick="switchSlot(1)">1</button>
@@ -948,17 +944,14 @@
             <input type="file" id="fileUpload" accept=".txt" onchange="handleFileUpload(this)">
         </div>
         
-        <!-- Cards Container -->
         <div id="cardsContainer" class="cards-container"></div>
         
-        <!-- Left Panel Loading Overlay -->
         <div id="leftLoading" class="loading-overlay" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; border-radius: 0;">
              <div class="spinner"></div>
              <p id="leftLoadingText">데이터 분석 중...</p>
         </div>
     </aside>
 
-    <!-- Right Panel: Episode Generator -->
     <main class="right-panel" id="panelGenerate">
         <div class="panel-header">
             <h2 class="panel-title">에피소드 생성 스튜디오</h2>
@@ -998,7 +991,6 @@
         </div>
     </main>
 
-    <!-- Mobile Bottom Navigation -->
     <nav class="mobile-nav">
         <div class="nav-item active" onclick="switchMobileTab('settings')">
             <i class="fa-solid fa-book-open"></i>
@@ -1010,7 +1002,6 @@
         </div>
     </nav>
 
-    <!-- Edit/Create Modal -->
     <div id="editModal" class="modal-overlay">
         <div class="modal">
             <div class="modal-header">
@@ -1059,7 +1050,6 @@
         </div>
     </div>
 
-    <!-- Paste Text Modal -->
     <div id="pasteModal" class="modal-overlay">
         <div class="modal">
             <div class="modal-header">
@@ -1079,7 +1069,6 @@
         </div>
     </div>
 
-    <!-- API Key Modal -->
     <div id="apiModal" class="modal-overlay">
         <div class="modal">
             <div class="modal-header">
@@ -1105,7 +1094,6 @@
         </div>
     </div>
 
-    <!-- History Modal -->
     <div id="historyModal" class="modal-overlay">
         <div class="modal" style="width: 600px;">
             <div class="modal-header">
@@ -1114,8 +1102,7 @@
             </div>
             <div class="modal-body">
                 <div id="historyList" class="history-list">
-                    <!-- History items will be injected here -->
-                </div>
+                    </div>
             </div>
             <div class="modal-footer">
                 <button class="btn-secondary" onclick="closeModal('history')">닫기</button>
@@ -1123,7 +1110,6 @@
         </div>
     </div>
 
-    <!-- Export Modal (Updated Structure with AI Polish) -->
     <div id="exportModal" class="modal-overlay">
         <div class="modal sheet-modal">
             <div class="modal-header">
@@ -1131,13 +1117,11 @@
                 <button class="close-btn" onclick="closeModal('export')" style="color:black;"><i class="fa-solid fa-xmark"></i></button>
             </div>
             <div class="modal-body sheet-scroll">
-                <!-- Loading Overlay for AI Generation -->
                 <div id="exportLoading" class="loading-overlay" style="background: rgba(255,255,255,0.9); display:none;">
                     <div class="spinner" style="border-color: rgba(0,0,0,0.1); border-top-color: var(--accent-color);"></div>
                     <p style="color:black; margin-top:15px;">AI가 문장을 다듬고 있습니다...</p>
                 </div>
 
-                <!-- Markdown Based Layout -->
                 <div class="sheet-container">
                     <div class="sheet-header-group">
                         <h1 class="sheet-title-main">작품기획시트</h1>
@@ -1146,7 +1130,6 @@
                         </div>
                     </div>
 
-                    <!-- 1. 작품 개요 -->
                     <div class="sheet-section">
                         <div class="sheet-section-title">1. 작품 개요</div>
                         <div class="sheet-field">
@@ -1163,7 +1146,6 @@
                         </div>
                     </div>
 
-                    <!-- 2. 컨셉 및 코드 -->
                     <div class="sheet-section">
                         <div class="sheet-section-title">2. 컨셉 및 코드</div>
                         <div class="sheet-field">
@@ -1176,7 +1158,6 @@
                         </div>
                     </div>
 
-                    <!-- 3. 기획 의도 -->
                     <div class="sheet-section">
                         <div class="sheet-section-title">3. 기획 의도 (서사 & 인물)</div>
                         <div class="sheet-field">
@@ -1189,7 +1170,6 @@
                         </div>
                     </div>
 
-                    <!-- 4. 시놉시스 및 배경 -->
                     <div class="sheet-section">
                         <div class="sheet-section-title">4. 시놉시스 및 배경</div>
                         <div class="sheet-field">
@@ -1198,7 +1178,6 @@
                         </div>
                     </div>
 
-                    <!-- 5. 등장인물 -->
                     <div class="sheet-section">
                         <div class="sheet-section-title">5. 등장인물 (캐릭터)</div>
                         <div class="sheet-field">
@@ -1206,7 +1185,6 @@
                         </div>
                     </div>
 
-                    <!-- 6. 레퍼런스 -->
                     <div class="sheet-section">
                         <div class="sheet-section-title">6. 레퍼런스</div>
                         <div class="sheet-field">
@@ -1220,7 +1198,6 @@
             <div class="modal-footer">
                 <button class="btn-secondary" onclick="closeModal('export')">닫기</button>
                 
-                <!-- AI Refine Button -->
                 <button class="action-btn polish" onclick="refineSheetWithAI()" style="margin:0;">
                     <i class="fa-solid fa-wand-magic-sparkles"></i> AI로 문장 다듬기
                 </button>
@@ -1232,7 +1209,6 @@
         </div>
     </div>
     
-    <!-- Custom Alert Modal -->
     <div id="alertModal" class="modal-overlay">
         <div class="modal" style="width: 400px;">
             <div class="modal-header">
@@ -1271,6 +1247,7 @@
         let worldData = []; 
         let GEMINI_API_KEY = localStorage.getItem('gemini_api_key') || '';
         let episodeHistory = JSON.parse(localStorage.getItem('episode_history')) || [];
+        const GEMINI_MODEL = "gemini-1.5-pro";
 
         // --- Local Storage & Slots ---
 
@@ -1542,7 +1519,7 @@
             `;
 
             try {
-                const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${GEMINI_API_KEY}`, {
+                const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent?key=${GEMINI_API_KEY}`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
@@ -1743,7 +1720,7 @@
             };
 
             try {
-                const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${GEMINI_API_KEY}`, {
+                const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent?key=${GEMINI_API_KEY}`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
@@ -1827,7 +1804,7 @@
             };
 
             try {
-                const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${GEMINI_API_KEY}`, {
+                const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent?key=${GEMINI_API_KEY}`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
@@ -1908,7 +1885,7 @@
             `;
 
             try {
-                const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${GEMINI_API_KEY}`, {
+                const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent?key=${GEMINI_API_KEY}`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
