@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="ko">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -11,8 +10,7 @@
             --bg-dark: #121212;
             --bg-panel: #1e1e1e;
             --bg-input: #2c2c2c;
-            --accent-color: #7c4dff;
-            /* Mystic Purple */
+            --accent-color: #7c4dff; /* Mystic Purple */
             --accent-hover: #651fff;
             --text-main: #e0e0e0;
             --text-sub: #a0a0a0;
@@ -38,12 +36,11 @@
             color: var(--text-main);
             height: 100vh;
             display: flex;
-            overflow: hidden;
-            /* Main container fixed */
+            overflow: hidden; /* Main container fixed */
         }
 
         /* --- Responsive Layout System --- */
-
+        
         /* Desktop Styles */
         .left-panel {
             width: 360px;
@@ -68,7 +65,7 @@
 
         /* Mobile Navigation (Hidden on Desktop) */
         .mobile-nav {
-            display: none;
+            display: none; 
             position: fixed;
             bottom: 0;
             left: 0;
@@ -79,8 +76,7 @@
             z-index: 1000;
             justify-content: space-around;
             align-items: center;
-            padding-bottom: env(safe-area-inset-bottom);
-            /* iPhone Home Bar safe area */
+            padding-bottom: env(safe-area-inset-bottom); /* iPhone Home Bar safe area */
         }
 
         .nav-item {
@@ -108,7 +104,7 @@
             body {
                 flex-direction: column;
                 height: 100%;
-                position: fixed;
+                position: fixed; 
                 width: 100%;
             }
 
@@ -116,61 +112,37 @@
                 display: flex;
             }
 
-            .left-panel,
-            .right-panel {
+            .left-panel, .right-panel {
                 width: 100%;
-                height: calc(100% - var(--mobile-nav-height));
+                height: calc(100% - var(--mobile-nav-height)); 
                 border-right: none;
                 padding: 20px;
                 padding-bottom: 80px;
-                display: none;
-                position: absolute;
+                display: none; 
+                position: absolute; 
                 top: 0;
                 left: 0;
                 z-index: 1;
             }
 
-            .left-panel.active-tab,
-            .right-panel.active-tab {
+            .left-panel.active-tab, .right-panel.active-tab {
                 display: flex;
                 z-index: 10;
             }
 
-            .brand-title {
-                font-size: 1rem;
+            .brand-title { font-size: 1rem; }
+            .project-name { font-size: 1.2rem; margin-bottom: 15px; }
+            .panel-title { font-size: 1.4rem; }
+            
+            .header-actions { gap: 8px; }
+            .settings-btn span.desktop-only { display: none; }
+            .settings-btn { padding: 8px 12px; }
+            
+            .input-area { padding: 15px; }
+            textarea, input[type="text"], select {
+                font-size: 16px !important; 
             }
-
-            .project-name {
-                font-size: 1.2rem;
-                margin-bottom: 15px;
-            }
-
-            .panel-title {
-                font-size: 1.4rem;
-            }
-
-            .header-actions {
-                gap: 8px;
-            }
-
-            .settings-btn span.desktop-only {
-                display: none;
-            }
-
-            .settings-btn {
-                padding: 8px 12px;
-            }
-
-            .input-area {
-                padding: 15px;
-            }
-
-            textarea,
-            input[type="text"],
-            select {
-                font-size: 16px !important;
-            }
-
+            
             .modal {
                 width: 100%;
                 height: 100%;
@@ -180,20 +152,17 @@
                 display: flex;
                 flex-direction: column;
             }
-
             .modal-body {
                 flex: 1;
                 overflow-y: auto;
                 padding-bottom: 50px;
             }
-
             .sheet-modal {
                 width: 100%;
                 height: 100%;
             }
-
             .sheet-grid {
-                grid-template-columns: 80px 1fr;
+                grid-template-columns: 80px 1fr; 
             }
         }
 
@@ -292,7 +261,7 @@
         .icon-btn:hover {
             color: var(--accent-color);
             border-color: var(--accent-color);
-            background-color: rgba(255, 255, 255, 0.05);
+            background-color: rgba(255,255,255,0.05);
         }
 
         .cards-container {
@@ -313,7 +282,7 @@
         }
 
         .info-card:active {
-            background-color: #333;
+            background-color: #333; 
         }
 
         .card-header {
@@ -341,20 +310,12 @@
         .action-icon {
             color: var(--text-sub);
             font-size: 1rem;
-            padding: 8px;
+            padding: 8px; 
             border-radius: 4px;
             transition: background-color 0.2s;
         }
-
-        .action-icon:hover {
-            color: white;
-            background-color: rgba(255, 255, 255, 0.1);
-        }
-
-        .action-icon.delete:hover {
-            color: var(--danger-color);
-            background-color: rgba(255, 82, 82, 0.1);
-        }
+        .action-icon:hover { color: white; background-color: rgba(255,255,255,0.1); }
+        .action-icon.delete:hover { color: var(--danger-color); background-color: rgba(255,82,82,0.1); }
 
         .card-desc {
             font-size: 0.9rem;
@@ -396,7 +357,6 @@
             align-items: center;
             gap: 6px;
         }
-
         .settings-btn:hover {
             border-color: var(--text-main);
             color: var(--text-main);
@@ -408,7 +368,7 @@
             border-radius: 12px;
             padding: 20px;
             margin-bottom: 24px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
         }
 
         .input-label {
@@ -419,10 +379,7 @@
             font-weight: 500;
         }
 
-        textarea,
-        input[type="text"],
-        input[type="password"],
-        select {
+        textarea, input[type="text"], input[type="password"], select {
             background-color: var(--bg-input);
             border: 1px solid transparent;
             border-radius: 8px;
@@ -439,14 +396,11 @@
             line-height: 1.6;
         }
 
-        textarea:focus,
-        input[type="text"]:focus,
-        input[type="password"]:focus,
-        select:focus {
+        textarea:focus, input[type="text"]:focus, input[type="password"]:focus, select:focus {
             outline: none;
             border-color: var(--accent-color);
         }
-
+        
         select {
             cursor: pointer;
             appearance: none;
@@ -455,7 +409,7 @@
             background-position: right 1rem center;
             background-size: 1em;
         }
-
+        
         select option {
             background-color: var(--bg-panel);
             color: white;
@@ -479,7 +433,7 @@
             margin-left: auto;
             transition: transform 0.2s, box-shadow 0.2s;
         }
-
+        
         .action-btn:active {
             transform: translateY(0);
         }
@@ -505,22 +459,21 @@
         }
 
         .action-btn.secondary:hover {
-            background-color: rgba(255, 255, 255, 0.05);
+            background-color: rgba(255,255,255,0.05);
             color: white;
             border-color: var(--text-main);
         }
-
+        
         .action-btn.reflect {
             background: rgba(124, 77, 255, 0.1);
             border: 1px solid var(--accent-color);
             color: var(--accent-color);
         }
-
         .action-btn.reflect:hover {
             background: var(--accent-color);
             color: white;
         }
-
+        
         .action-btn.polish {
             background: linear-gradient(135deg, #00c6ff, #0072ff);
             border: none;
@@ -558,7 +511,7 @@
         .generated-content {
             display: none;
             animation: fadeIn 0.5s ease;
-            white-space: pre-line;
+            white-space: pre-line; 
         }
 
         .generated-content h3 {
@@ -596,34 +549,15 @@
         .spinner {
             width: 40px;
             height: 40px;
-            border: 4px solid rgba(255, 255, 255, 0.1);
+            border: 4px solid rgba(255,255,255,0.1);
             border-top: 4px solid var(--accent-color);
             border-radius: 50%;
             animation: spin 1s linear infinite;
             margin-bottom: 16px;
         }
 
-        @keyframes spin {
-            0% {
-                transform: rotate(0deg);
-            }
-
-            100% {
-                transform: rotate(360deg);
-            }
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(10px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
         /* Tags */
         .tag {
@@ -665,7 +599,7 @@
             width: 450px;
             max-width: 90%;
             padding: 24px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
             display: flex;
             flex-direction: column;
             max-height: 85vh;
@@ -700,29 +634,12 @@
             padding: 8px;
         }
 
-        .close-btn:hover {
-            color: white;
-        }
+        .close-btn:hover { color: white; }
 
-        .form-group {
-            margin-bottom: 16px;
-        }
-
-        .form-label {
-            display: block;
-            margin-bottom: 8px;
-            color: var(--text-sub);
-            font-size: 0.9rem;
-        }
-
-        .modal-footer {
-            display: flex;
-            justify-content: flex-end;
-            gap: 12px;
-            margin-top: 24px;
-            flex-shrink: 0;
-        }
-
+        .form-group { margin-bottom: 16px; }
+        .form-label { display: block; margin-bottom: 8px; color: var(--text-sub); font-size: 0.9rem; }
+        .modal-footer { display: flex; justify-content: flex-end; gap: 12px; margin-top: 24px; flex-shrink: 0;}
+        
         .btn-secondary {
             background-color: transparent;
             border: 1px solid var(--border-color);
@@ -731,12 +648,8 @@
             border-radius: 6px;
             cursor: pointer;
         }
-
-        .btn-secondary:hover {
-            background-color: rgba(255, 255, 255, 0.05);
-            color: white;
-        }
-
+        .btn-secondary:hover { background-color: rgba(255,255,255,0.05); color: white; }
+        
         .btn-primary {
             background-color: var(--accent-color);
             border: none;
@@ -746,10 +659,7 @@
             font-weight: 600;
             cursor: pointer;
         }
-
-        .btn-primary:hover {
-            background-color: var(--accent-hover);
-        }
+        .btn-primary:hover { background-color: var(--accent-hover); }
 
         .api-link {
             font-size: 0.8rem;
@@ -758,26 +668,13 @@
             margin-top: 8px;
             display: inline-block;
         }
-
-        .api-link:hover {
-            text-decoration: underline;
-        }
-
-        #fileUpload {
-            display: none;
-        }
-
+        .api-link:hover { text-decoration: underline; }
+        
+        #fileUpload { display: none; }
+        
         /* Custom Alert Modal */
-        .alert-modal-body {
-            text-align: center;
-            padding: 20px 0;
-        }
-
-        .alert-message {
-            color: white;
-            margin-bottom: 20px;
-            line-height: 1.5;
-        }
+        .alert-modal-body { text-align: center; padding: 20px 0; }
+        .alert-message { color: white; margin-bottom: 20px; line-height: 1.5; }
 
         /* History List Styles */
         .history-list {
@@ -785,7 +682,6 @@
             flex-direction: column;
             gap: 12px;
         }
-
         .history-item {
             background-color: var(--bg-input);
             border: 1px solid var(--border-color);
@@ -793,11 +689,9 @@
             padding: 16px;
             transition: all 0.2s;
         }
-
         .history-item:hover {
             border-color: var(--text-sub);
         }
-
         .history-meta {
             display: flex;
             justify-content: space-between;
@@ -806,7 +700,6 @@
             font-size: 0.8rem;
             color: var(--text-sub);
         }
-
         .history-event {
             font-weight: 600;
             color: white;
@@ -816,7 +709,6 @@
             -webkit-box-orient: vertical;
             overflow: hidden;
         }
-
         .history-preview {
             font-size: 0.9rem;
             color: var(--text-sub);
@@ -826,13 +718,11 @@
             overflow: hidden;
             margin-bottom: 12px;
         }
-
         .history-actions {
             display: flex;
             gap: 8px;
             justify-content: flex-end;
         }
-
         .history-btn {
             font-size: 0.8rem;
             padding: 6px 12px;
@@ -842,48 +732,31 @@
             background: transparent;
             color: var(--text-main);
         }
-
-        .history-btn:hover {
-            background: rgba(255, 255, 255, 0.1);
-        }
-
-        .history-btn.delete:hover {
-            color: var(--danger-color);
-            border-color: var(--danger-color);
-        }
-
-        .empty-history {
-            text-align: center;
-            padding: 40px 0;
-            color: var(--text-sub);
-        }
+        .history-btn:hover { background: rgba(255,255,255,0.1); }
+        .history-btn.delete:hover { color: var(--danger-color); border-color: var(--danger-color); }
+        .empty-history { text-align: center; padding: 40px 0; color: var(--text-sub); }
 
         /* Export Sheet Styles (Based on Markdown Structure) */
         .sheet-modal {
-            width: 210mm;
-            /* A4 Width */
+            width: 210mm; /* A4 Width */
             max-width: 95%;
             height: 90vh;
-            background-color: #fff;
-            /* Paper White */
-            color: #000;
-            /* Black text for print */
+            background-color: #fff; /* Paper White */
+            color: #000; /* Black text for print */
             padding: 0;
             overflow: hidden;
         }
-
         .sheet-scroll {
             overflow-y: auto;
             height: 100%;
             padding: 40px;
         }
-
         .sheet-container {
             width: 100%;
-            font-family: 'Pretendard', serif;
+            font-family: 'Pretendard', serif; 
             line-height: 1.6;
         }
-
+        
         /* Sheet Header */
         .sheet-header-group {
             display: flex;
@@ -893,14 +766,12 @@
             padding-bottom: 15px;
             margin-bottom: 30px;
         }
-
         .sheet-title-main {
             font-size: 2.5rem;
             font-weight: 900;
             color: #000;
             margin: 0;
         }
-
         .sheet-meta-info {
             font-size: 0.9rem;
             color: #555;
@@ -911,7 +782,6 @@
         .sheet-section {
             margin-bottom: 30px;
         }
-
         .sheet-section-title {
             font-size: 1.3rem;
             font-weight: 800;
@@ -920,12 +790,11 @@
             margin-bottom: 15px;
             color: #222;
         }
-
+        
         /* Input Groups in Sheet */
         .sheet-field {
             margin-bottom: 20px;
         }
-
         .sheet-field-label {
             font-weight: 700;
             font-size: 1rem;
@@ -933,7 +802,6 @@
             color: #000;
             display: block;
         }
-
         .sheet-field-input {
             width: 100%;
             border: 1px solid #ddd;
@@ -945,35 +813,30 @@
             resize: vertical;
             color: #333;
         }
-
         .sheet-field-input:focus {
             outline: none;
             border-color: var(--accent-color);
             background: #fff;
         }
-
         .sheet-field-input.short {
             height: 40px;
         }
-
         .sheet-field-input.medium {
             height: 80px;
         }
-
         .sheet-field-input.long {
             height: 150px;
         }
 
         /* --- PRINT STYLES: FIX FOR CUTOFF & FULL EXPANSION --- */
         @media print {
-            @page {
+            @page { 
                 size: A4;
                 margin: 15mm;
             }
-
+            
             /* Reset main layout */
-            body,
-            html {
+            body, html {
                 background: white;
                 width: 100%;
                 height: auto !important;
@@ -983,18 +846,13 @@
             }
 
             /* Hide non-print elements */
-            .left-panel,
-            .right-panel,
-            .mobile-nav,
-            .modal-overlay:not(#exportModal),
-            .modal-header,
-            .modal-footer,
-            .close-btn,
-            .settings-btn,
-            .action-btn {
+            .left-panel, .right-panel, .mobile-nav, 
+            .modal-overlay:not(#exportModal), 
+            .modal-header, .modal-footer, .close-btn,
+            .settings-btn, .action-btn {
                 display: none !important;
             }
-
+            
             /* Export Modal Print Styling */
             #exportModal {
                 display: block !important;
@@ -1009,7 +867,7 @@
                 margin: 0 !important;
                 overflow: visible !important;
             }
-
+            
             .sheet-modal {
                 width: 100% !important;
                 height: auto !important;
@@ -1019,21 +877,20 @@
                 padding: 0 !important;
                 overflow: visible !important;
             }
-
+            
             .sheet-scroll {
                 height: auto !important;
                 overflow: visible !important;
                 padding: 0 !important;
             }
-
+            
             .sheet-container {
                 width: 100% !important;
                 margin: 0 !important;
             }
-
+            
             /* Input Expansion for Print */
-            .sheet-field-input,
-            textarea {
+            .sheet-field-input, textarea {
                 border: none !important;
                 background: transparent !important;
                 resize: none !important;
@@ -1041,22 +898,30 @@
                 margin: 0 !important;
                 font-size: 11pt !important;
                 line-height: 1.5 !important;
+<<<<<<< HEAD
                 min-height: 0 !important;
                 max-height: none !important;
                 overflow: hidden !important;
                 white-space: pre-wrap !important;
+=======
+                height: auto !important; /* Allow infinite height */
+                min-height: 0 !important;
+                max-height: none !important;
+                overflow: visible !important;
+                white-space: pre-wrap !important; 
+>>>>>>> parent of 8aa780f (Update index.html)
                 color: black !important;
                 display: block !important;
             }
-
+            
             .sheet-section {
                 page-break-inside: avoid;
                 margin-bottom: 20px;
             }
         }
+        
     </style>
 </head>
-
 <body>
 
     <aside class="left-panel active-tab" id="panelSettings">
@@ -1085,13 +950,12 @@
             </div>
             <input type="file" id="fileUpload" accept=".txt" onchange="handleFileUpload(this)">
         </div>
-
+        
         <div id="cardsContainer" class="cards-container"></div>
-
-        <div id="leftLoading" class="loading-overlay"
-            style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; border-radius: 0;">
-            <div class="spinner"></div>
-            <p id="leftLoadingText">데이터 분석 중...</p>
+        
+        <div id="leftLoading" class="loading-overlay" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; border-radius: 0;">
+             <div class="spinner"></div>
+             <p id="leftLoadingText">데이터 분석 중...</p>
         </div>
     </aside>
 
@@ -1202,8 +1066,7 @@
             <div class="modal-body">
                 <div class="form-group">
                     <label class="form-label">설정 데이터 (세계관, 캐릭터 등)</label>
-                    <textarea id="pasteInput" style="height: 200px;"
-                        placeholder="메모장이나 문서에 적어둔 내용을 여기에 복사해서 붙여넣으세요."></textarea>
+                    <textarea id="pasteInput" style="height: 200px;" placeholder="메모장이나 문서에 적어둔 내용을 여기에 복사해서 붙여넣으세요."></textarea>
                 </div>
             </div>
             <div class="modal-footer">
@@ -1246,7 +1109,7 @@
             </div>
             <div class="modal-body">
                 <div id="historyList" class="history-list">
-                </div>
+                    </div>
             </div>
             <div class="modal-footer">
                 <button class="btn-secondary" onclick="closeModal('history')">닫기</button>
@@ -1258,14 +1121,11 @@
         <div class="modal sheet-modal">
             <div class="modal-header">
                 <h3 class="modal-title" style="color:black;">통합 기획서 미리보기</h3>
-                <button class="close-btn" onclick="closeModal('export')" style="color:black;"><i
-                        class="fa-solid fa-xmark"></i></button>
+                <button class="close-btn" onclick="closeModal('export')" style="color:black;"><i class="fa-solid fa-xmark"></i></button>
             </div>
             <div class="modal-body sheet-scroll">
-                <div id="exportLoading" class="loading-overlay"
-                    style="background: rgba(255,255,255,0.9); display:none;">
-                    <div class="spinner" style="border-color: rgba(0,0,0,0.1); border-top-color: var(--accent-color);">
-                    </div>
+                <div id="exportLoading" class="loading-overlay" style="background: rgba(255,255,255,0.9); display:none;">
+                    <div class="spinner" style="border-color: rgba(0,0,0,0.1); border-top-color: var(--accent-color);"></div>
                     <p style="color:black; margin-top:15px;">AI가 문장을 다듬고 있습니다...</p>
                 </div>
 
@@ -1285,13 +1145,11 @@
                         </div>
                         <div class="sheet-field">
                             <label class="sheet-field-label">타겟 / 장르 / 플랫폼</label>
-                            <input type="text" class="sheet-field-input short" id="sheetGenre"
-                                placeholder="예: 20대 남성 / 어반 판타지 / 웹소설">
+                            <input type="text" class="sheet-field-input short" id="sheetGenre" placeholder="예: 20대 남성 / 어반 판타지 / 웹소설">
                         </div>
                         <div class="sheet-field">
                             <label class="sheet-field-label">로그라인 (한 줄 소개)</label>
-                            <textarea id="sheetLogline" class="sheet-field-input medium"
-                                placeholder="작품을 한 줄로 요약하세요."></textarea>
+                            <textarea id="sheetLogline" class="sheet-field-input medium" placeholder="작품을 한 줄로 요약하세요."></textarea>
                         </div>
                     </div>
 
@@ -1299,13 +1157,11 @@
                         <div class="sheet-section-title">2. 컨셉 및 코드</div>
                         <div class="sheet-field">
                             <label class="sheet-field-label">키워드 / 코드</label>
-                            <textarea id="sheetKeywords" class="sheet-field-input medium"
-                                placeholder="작품의 성격, 스타일 (ex. 먼치킨, 사이다)"></textarea>
+                            <textarea id="sheetKeywords" class="sheet-field-input medium" placeholder="작품의 성격, 스타일 (ex. 먼치킨, 사이다)"></textarea>
                         </div>
                         <div class="sheet-field">
                             <label class="sheet-field-label">아이템 (소재) & 클리셰 (설정)</label>
-                            <textarea id="sheetItems" class="sheet-field-input long"
-                                placeholder="자동 입력됩니다..."></textarea>
+                            <textarea id="sheetItems" class="sheet-field-input long" placeholder="자동 입력됩니다..."></textarea>
                         </div>
                     </div>
 
@@ -1313,13 +1169,11 @@
                         <div class="sheet-section-title">3. 기획 의도 (서사 & 인물)</div>
                         <div class="sheet-field">
                             <label class="sheet-field-label">기획 의도</label>
-                            <textarea id="sheetIntention" class="sheet-field-input medium"
-                                placeholder="이 작품을 통해 전달하고 싶은 것은?"></textarea>
+                            <textarea id="sheetIntention" class="sheet-field-input medium" placeholder="이 작품을 통해 전달하고 싶은 것은?"></textarea>
                         </div>
                         <div class="sheet-field">
                             <label class="sheet-field-label">성장 / 방해 / 공감 요소</label>
-                            <textarea id="sheetElements" class="sheet-field-input long"
-                                placeholder="주인공의 성장 배경, 방해물, 독자 공감 포인트 등"></textarea>
+                            <textarea id="sheetElements" class="sheet-field-input long" placeholder="주인공의 성장 배경, 방해물, 독자 공감 포인트 등"></textarea>
                         </div>
                     </div>
 
@@ -1327,16 +1181,14 @@
                         <div class="sheet-section-title">4. 시놉시스 및 배경</div>
                         <div class="sheet-field">
                             <label class="sheet-field-label">시놉시스 및 세계관</label>
-                            <textarea id="sheetSynopsis" class="sheet-field-input long" style="height: 300px;"
-                                placeholder="배경 설정이 자동으로 입력됩니다."></textarea>
+                            <textarea id="sheetSynopsis" class="sheet-field-input long" style="height: 300px;" placeholder="배경 설정이 자동으로 입력됩니다."></textarea>
                         </div>
                     </div>
 
                     <div class="sheet-section">
                         <div class="sheet-section-title">5. 등장인물 (캐릭터)</div>
                         <div class="sheet-field">
-                            <textarea id="sheetCharacters" class="sheet-field-input long" style="height: 400px;"
-                                placeholder="캐릭터 설정이 자동으로 입력됩니다."></textarea>
+                            <textarea id="sheetCharacters" class="sheet-field-input long" style="height: 400px;" placeholder="캐릭터 설정이 자동으로 입력됩니다."></textarea>
                         </div>
                     </div>
 
@@ -1344,8 +1196,7 @@
                         <div class="sheet-section-title">6. 레퍼런스</div>
                         <div class="sheet-field">
                             <label class="sheet-field-label">코어 / 이미지 / 감성</label>
-                            <textarea id="sheetRefs" class="sheet-field-input medium"
-                                placeholder="참고한 작품이나 분위기를 적어주세요."></textarea>
+                            <textarea id="sheetRefs" class="sheet-field-input medium" placeholder="참고한 작품이나 분위기를 적어주세요."></textarea>
                         </div>
                     </div>
 
@@ -1353,7 +1204,7 @@
             </div>
             <div class="modal-footer">
                 <button class="btn-secondary" onclick="closeModal('export')">닫기</button>
-
+                
                 <button class="action-btn polish" onclick="refineSheetWithAI()" style="margin:0;">
                     <i class="fa-solid fa-wand-magic-sparkles"></i> AI로 문장 다듬기
                 </button>
@@ -1364,7 +1215,7 @@
             </div>
         </div>
     </div>
-
+    
     <div id="alertModal" class="modal-overlay">
         <div class="modal" style="width: 400px;">
             <div class="modal-header">
@@ -1382,5 +1233,4 @@
 
     <script src="script.js"></script>
 </body>
-
 </html>
